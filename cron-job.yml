@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: eng89
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: eng89
+              image: busybox
+              imagePullPolicy: IfNotPresent
+              command:
+              - /bin/sh
+              - -c
+              - date; echo ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+          restartPolicy: OnFailure
+
+
+# k apply -f cron-job.yml
+# kubectl get cronjob
+# kubectl get job --watch
+# pods=$(kubectl get pods --selector=job-name=eng89-27163576 --output=jsonpath={.items[*].metadata.name})
+# kubectl logs $pods
